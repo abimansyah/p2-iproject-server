@@ -1,11 +1,11 @@
 const { verifyToken } = require('../helpers/jwt')
 const { User } = require('../models/index')
 
+
 const authentication = async (req, res, next) => {
   try {
     const { access_token } = req.headers;
     const payload = verifyToken(access_token)
-
     const user = await User.findByPk(payload.id)
 
     req.currentUser = {
@@ -21,6 +21,7 @@ const authentication = async (req, res, next) => {
     }
 
   } catch (err) {
+    console.log(err);
     next(err)
   }
 }
