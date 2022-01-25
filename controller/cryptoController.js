@@ -7,12 +7,37 @@ const baseUrl = "https://api.coinranking.com/v2";
 class cryptoController {
   static async getCrypto(req, res, next) {
     try {
+
+      let parameters = {}
+
+      const {orderBy, search, limit, offset, orderDirection} = req.query
+      
+      if(orderBy){
+        parameters.orderBy = orderBy 
+      }
+      if(search){
+        parameters.search = search
+      }
+      if(limit){
+        parameters.limit = +limit
+      }
+      if(offset){
+        parameters.offset = +offset
+      }
+      if(orderDirection){
+        parameters.orderDirection = orderDirection
+      }
+      
+      // console.log(search);
+
       const response = await axios({
         method: "get",
         url: `${baseUrl}/coins`,
         headers: {
           "x-access-token": `${apiKey}`,
         },
+        params:parameters
+        
       });
       res.status(200).json(response.data);
     } catch (err) {
