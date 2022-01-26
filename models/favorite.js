@@ -15,7 +15,19 @@ module.exports = (sequelize, DataTypes) => {
   }
   Favorite.init({
     userId: DataTypes.INTEGER,
-    coinId: DataTypes.STRING
+    coinId: DataTypes.STRING,
+    name: DataTypes.STRING,
+    symbol:DataTypes.STRING,
+    price: DataTypes.STRING,
+    listedAt: DataTypes.INTEGER,
+    iconUrl: DataTypes.STRING,
+    tier: DataTypes.INTEGER,
+    change: DataTypes.STRING,
+    rank: DataTypes.INTEGER,
+    coinrankingUrl: DataTypes.STRING,
+    btcPrice: DataTypes.STRING,
+    '24hVolume': DataTypes.STRING,
+
   }, {
     sequelize,
     modelName: 'Favorite',
