@@ -45,6 +45,36 @@ class cryptoController {
     }
   }
 
+  static async getCryptoById(req,res,next){
+    try {
+      const {id} = req.params
+
+      const response = await axios({
+        method: "get",
+        url: `${baseUrl}/coins`,
+        headers: {
+          "x-access-token": `${apiKey}`,
+        },   
+      });
+
+      const findCoin = response.data.data.coins.filter((e) => {
+        if (id === e.uuid) {
+          return e;
+        }
+      });
+
+      // console.log(findCoin[0].uuid);
+      if(findCoin){
+        res.status(200).json(findCoin[0])
+      } else {
+        throw { name: "NotFound" }
+      }
+      
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async postFavorite(req, res, next) {
     try {
       const { coinId } = req.params;
@@ -68,7 +98,6 @@ class cryptoController {
           },
         });
 
-        // console.log(coin.data);
         const findCoin = coin.data.data.coins.filter((e) => {
           if (coinId === e.uuid) {
             return e;
@@ -76,14 +105,29 @@ class cryptoController {
         });
         // console.log(coin.data.data.coins);
         // console.log(findCoin);
+        
 
         if (findCoin.length !== 0) {
           await Favorite.create({
             userId: req.currentUser.id,
             coinId: req.params.coinId,
+            name: findCoin[0].name,
+            symbol: findCoin[0].symbol,
+            price: findCoin[0].price,
+            listedAt: findCoin[0].listedAt,
+            iconUrl: findCoin[0].iconUrl,
+            tier: findCoin[0].tier,
+            change: findCoin[0].change,
+            rank: findCoin[0].rank,
+            coinrankingUrl: findCoin[0].coinrankingUrl,
+            btcPrice: findCoin[0].btcPrice,
+            '24hVolume': findCoin[0]['24hVolume'],
+
           });
+          
+          let nameData = findCoin[0]
           res.status(201).json({
-            message: "Coin has been added to your favorites",
+            message: `${nameData.name} has been added to your favorites`,
           });
         } else {
           throw { name: "NotFound" };
