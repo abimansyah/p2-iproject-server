@@ -31,6 +31,7 @@ const errorHandler = (err, req, res, next) => {
       res.status(400).json({ message: 'Cannot Add the Same Coin To Your Favorites'})
       break;
     default:
+      console.log(err);
       res.status(500).json({ message: 'Internal Server Error' })
       break;
   }
