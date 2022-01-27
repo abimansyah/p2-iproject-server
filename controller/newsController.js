@@ -1,7 +1,7 @@
 const { User, Favorite } = require("../models/index");
 const axios = require("axios");
 const { Op } = require("sequelize");
-const apiKey = "45112680e5ee4913ba3ef73268070fc1";
+const apiKey = process.env.NEWS_API;
 const baseUrl = "https://newsapi.org/v2";
 
 class newsController {
