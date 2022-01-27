@@ -1,7 +1,7 @@
 const { User, Favorite } = require("../models/index");
 const axios = require("axios");
 const { Op } = require("sequelize");
-const apiKey = "coinranking67ceb3740d22973212ae3bbcc229bc34a6452656205598b9";
+const apiKey = process.env.COINRANKING_API;
 const baseUrl = "https://api.coinranking.com/v2";
 
 class cryptoController {
